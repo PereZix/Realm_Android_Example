@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.a2p.examplesimplerealm.Interface.OnItemClickListener;
@@ -26,15 +27,17 @@ public class AdapterMain extends RecyclerView.Adapter<AdapterMain.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView txvRaza;
+        public ImageButton imageButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txvRaza = itemView.findViewById(R.id.txvRaza);
+            imageButton = itemView.findViewById(R.id.imgbDelete);
         }
 
         public void bind(final Dog item, final OnItemClickListener mlistener){
             txvRaza.setText(item.getName());
-            itemView.setOnClickListener(new View.OnClickListener() {
+            imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mlistener.onItemClick(item);

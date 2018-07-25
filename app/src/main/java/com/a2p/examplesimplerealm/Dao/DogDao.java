@@ -34,8 +34,6 @@ public class DogDao {
                 Dog dog = realm.createObject(Dog.class);
                 dog.setId(incrementId());
                 dog.setName(nombreRaza);
-
-                closeRealm();
             }
         });
     }
@@ -46,7 +44,6 @@ public class DogDao {
             public void execute(Realm realm) {
                 RealmResults<Dog> dogResult = realm.where(Dog.class).equalTo(ID_DOG, idDog).findAll();
                 dogResult.clear();
-                closeRealm();
             }
         });
 
@@ -56,7 +53,6 @@ public class DogDao {
         realm.beginTransaction();
         RealmResults<Dog> dogs = realm.where(Dog.class).findAll();
         realm.commitTransaction();
-        closeRealm();
 
         return dogs;
     }
