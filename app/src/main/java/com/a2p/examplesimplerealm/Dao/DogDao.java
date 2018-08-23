@@ -21,9 +21,8 @@ public class DogDao {
 
     public DogDao(Context context){
         if (realm == null){
-            if (realm.isClosed()){
-                this.realm = Realm.getDefaultInstance();
-            }
+            Realm.init(context);
+            this.realm = Realm.getDefaultInstance();
         }
     }
 
@@ -31,19 +30,19 @@ public class DogDao {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Dog dog = realm.createObject(Dog.class);
-                dog.setId(incrementId());
+                Dog dog = realm.createObject(Dog.class, incrementId()); //generar id
                 dog.setName(nombreRaza);
             }
         });
     }
 
     public void DeleteDog(final int idDog){
+        final RealmResults<Dog> results = realm.where(Dog.class).equalTo("id",idDog).findAll();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                RealmResults<Dog> dogResult = realm.where(Dog.class).equalTo(ID_DOG, idDog).findAll();
-                dogResult.clear();
+                results.deleteFromRealm(0);
+
             }
         });
 
